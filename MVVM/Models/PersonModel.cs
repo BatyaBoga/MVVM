@@ -12,4 +12,9 @@ namespace MVVM.Models
 
         public string LastName { get; set; }
     }
+
+    public class Persons
+    {
+        public List<Person> PersonsList { get; set; }
+    }
 }

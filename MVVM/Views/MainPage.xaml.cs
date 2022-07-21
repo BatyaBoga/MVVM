@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MVVM.ViewModels;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
@@ -25,6 +26,10 @@ namespace MVVM
         public MainPage()
         {
             this.InitializeComponent();
+            Persons = new PersonsListViewModel();
+
         }
+
+        public PersonsListViewModel Persons { get; set; }
     }
 }

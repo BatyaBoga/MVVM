@@ -1,25 +1,26 @@
-﻿using System;
-using MVVM.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MVVM.Models;
+using System.IO;
+using Newtonsoft.Json;
+using Windows.ApplicationModel;
+
 
 namespace MVVM.Data
 {
     public class DataBaseImitation
     {
-        public static List<Person> GetPeople() 
-        { 
-            
-            return new List<Person>()
+        public static Persons GetPeople() 
+        {
+            string path = Path.Combine(Package.Current.InstalledLocation.Path, "PersonsDB.json");
+            using (StreamReader sr = File.OpenText(path))
             {
-               new Person() { FirstName = "Bill", LastName = "Gates" },
-               new Person() { FirstName = "Paul", LastName = "Alen" },
-               new Person() { FirstName = "Leslie", LastName = "Lamport" }
-
-            };
-            
+                string result = sr.ReadToEnd();
+                return JsonConvert.DeserializeObject<Persons>(result);
+            }
         }
-    }
+
+        public static void Update(Persons ps)
+        {
+             //write to file code
+        }
+    }   
 }

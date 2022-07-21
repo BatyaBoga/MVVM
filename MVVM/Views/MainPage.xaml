@@ -3,12 +3,41 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MVVM"
+    xmlns:viewModels="using:MVVM.ViewModels"
+    xmlns:converters="using:MVVM.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" Height="388" Width="712" MinWidth="712" MinHeight="388" MaxHeight="388" MaxWidth="712">
 
-    <Grid>
-
+    <Page.Resources>
+        <converters:ObjectExistsToVisible x:Key="ObjectExistsToVisible" />
+    </Page.Resources>
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <ListView  x:Name="MainList" ItemsSource="{x:Bind Persons.Persones, Mode=OneWay}"  SelectedIndex="{x:Bind Persons.SelectedIndex, Mode=TwoWay}" MinWidth="250" Margin="5">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:PersonViewModel" >
+                        <TextBlock Text="{x:Bind FirstName, Mode=OneWay}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Content="Add" Click="{x:Bind  Persons.Add}" Margin="5" Width="249"/>
+            <Button Content="Delete" Click="{x:Bind Persons.Delete}" Margin="5" Width="249"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="2" Orientation="Vertical" Visibility="{x:Bind Persons.SelectedPerson, Mode=OneWay, Converter={StaticResource ObjectExistsToVisible}}" >
+            <TextBlock>FirstName:</TextBlock>
+            <TextBox Text="{x:Bind Persons.SelectedPerson.FirstName, Mode=TwoWay, FallbackValue=''}" Margin="5" Width="269" />
+            <TextBlock>LastName:</TextBlock>
+            <TextBox Text="{x:Bind Persons.SelectedPerson.LastName, Mode=TwoWay, FallbackValue=''}" Margin="5" />
+           
+        </StackPanel>
     </Grid>
 </Page>

@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MVVM.Models;
 
 namespace MVVM.ViewModels
 {
-    internal class PersonViewModel
+    public class PersonViewModel : ViewModelBase<Person>
     {
+        public PersonViewModel(Person person = null) : base(person) { }
+        public string FirstName
+        {
+            get { return This.FirstName; }
+            set { SetProperty(This.FirstName, value, () => This.FirstName = value); }
+        }
+        public string LastName
+        {
+            get { return This.LastName; }
+            set { SetProperty(This.LastName, value, () => This.LastName = value); }
+        }
+
     }
 }
